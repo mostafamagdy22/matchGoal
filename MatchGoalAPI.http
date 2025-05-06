@@ -1,0 +1,6 @@
+@MatchGoalAPI_HostAddress = http://localhost:5004
+
+GET {{MatchGoalAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
