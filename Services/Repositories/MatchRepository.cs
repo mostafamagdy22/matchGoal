@@ -7,10 +7,12 @@ namespace MatchGoalAPI.Services.Repositories
 	{
 		private readonly ApplicationDbContext _context;
 		private readonly IConfiguration _configuration;
-		public MatchRepository(ApplicationDbContext context,IConfiguration configuration)
+		private readonly ILogger _logger;
+		public MatchRepository(ILogger<MatchRepository> logger,ApplicationDbContext context,IConfiguration configuration)
 		{
 			_context = context;
 			_configuration = configuration;
+			_logger = logger;
 		}
 		/// <summary>
 		/// Add a new match to the database
@@ -19,9 +21,16 @@ namespace MatchGoalAPI.Services.Repositories
 		/// <returns><see cref="bool"/> describe if match added successfully or not</returns>
 		public async Task<bool> Add(Match obj)
 		{
-			await _context.Matches.AddAsync(obj);
-			bool result = _context.SaveChangesAsync().IsCompletedSuccessfully;
-			return result;
+			try
+			{
+				await _context.Matches.AddAsync(obj);
+				await _context.SaveChangesAsync();
+				return true;
+			}
+			catch (Exception ex)
+			{
+				return false;
+			}
 		}
 		public async Task<List<Match>> GetAll(int pageSize, int page,string filter)
 		{
@@ -82,25 +91,64 @@ namespace MatchGoalAPI.Services.Repositories
 
 			return await query.ToListAsync();
 		}
-
 		public Task<ICollection<Match>> GetMatchesFromCahche(string source)
 		{
 			throw new NotImplementedException();
 		}
 		public async Task<bool> Remove(int id)
 		{
-			Match match = await _context.Matches.FindAsync(id);
-			if (match == null)
-				return false;
+			try
+			{
+				Match match = await _context.Matches.FindAsync(id);
+				if (match == null)
+					return false;
 
-			_context.Matches.Remove(match);
-			await _context.SaveChangesAsync();
-			throw new NotImplementedException();
+				_context.Matches.Remove(match);
+				await _context.SaveChangesAsync();
+				return true;
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError($"Error removing match with ID {id}: {ex.Message}");
+				return false;
+			}
 		}
 
-		public Task<bool> Update(Match obj)
+		public async Task<bool> Update(int id,Match obj)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				Match match = await _context.Matches.FindAsync(id);
+				if (match == null)
+				{
+					_logger.LogError($"Match with ID {id} not found.");
+					return false;
+				}
+
+				if (id != obj.ID)
+				{
+					_logger.LogError($"Match ID mismatch: {id} != {obj.ID}");
+					return false;
+				}
+				match.HomeTeamID = obj.HomeTeamID;
+				match.AwayTeamID = obj.AwayTeamID;
+				match.CompetitionID = obj.CompetitionID;
+				match.FirstTeamScore = obj.FirstTeamScore;
+				match.SecondTeamScore = obj.SecondTeamScore;
+				match.MatchDate = obj.MatchDate;
+				match.LastScoreUpdate = obj.LastScoreUpdate ?? DateTime.UtcNow;
+				match.Stadium = obj.Stadium;
+				match.Status = obj.Status;
+				match.WinnerID = obj.WinnerID;
+
+				_context.Matches.Update(match);
+				await _context.SaveChangesAsync();
+				return true;
+			}
+			catch (Exception ex)
+			{
+				return false;
+			}
 		}
 	}
 }

@@ -4,7 +4,7 @@
 	{
 		protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
 		{
-			AddMatchDto dto = (AddMatchDto)validationContext.ObjectInstance;
+			AddUpdateMatchDto dto = (AddUpdateMatchDto)validationContext.ObjectInstance;
 
 			int? winnerTeamId = (int?)value;
 			MatchStatusEnum status = dto.Status;

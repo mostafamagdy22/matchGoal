@@ -170,3 +170,4 @@ D:\projects\API\matchGoal\MatchGoalAPI\obj\Debug\net9.0\ref\MatchGoalAPI.dll
 D:\projects\API\matchGoal\MatchGoalAPI\bin\Debug\net9.0\Newtonsoft.Json.dll
 D:\projects\API\matchGoal\MatchGoalAPI\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 D:\projects\API\matchGoal\MatchGoalAPI\bin\Debug\net9.0\AutoMapper.dll
+D:\projects\API\matchGoal\MatchGoalAPI\obj\Debug\net9.0\MatchGoalAPI.sourcelink.json

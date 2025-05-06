@@ -14,10 +14,11 @@ namespace MatchGoalAPI.Mapping
 				.ForMember(dest=> dest.AwayTeamScore,opt => opt.MapFrom(src => src.SecondTeamScore))
 				.ReverseMap();
 
-			CreateMap<Match, AddMatchDto>()
+			CreateMap<Match, AddUpdateMatchDto>()
+				.ForMember(dest => dest.id, opt => opt.MapFrom(src => src.ID))
 				.ForMember(dest => dest.HomeTeamScore, opt => opt.MapFrom(src => src.FirstTeamScore))
 				.ForMember(dest => dest.AwayTeamScore, opt => opt.MapFrom(src => src.SecondTeamScore))
-				.ForMember(dest => dest.Status,opt => opt.MapFrom(src => src.Status))
+				.ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
 				.ForMember(dest => dest.HomeTeamID, opt => opt.MapFrom(src => src.HomeTeamID))
 				.ForMember(dest => dest.AwayTeamID, opt => opt.MapFrom(src => src.AwayTeamID))
 				.ForMember(dest => dest.CompetitionID, opt => opt.MapFrom(src => src.CompetitionID))

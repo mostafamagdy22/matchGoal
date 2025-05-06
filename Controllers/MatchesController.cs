@@ -60,7 +60,7 @@ namespace MatchGoalAPI.Controllers
 		}
 		[HttpPost("AddMatch")]
 		[Authorize(Roles = "Admin",AuthenticationSchemes = "Cookies,Bearer")]
-		public async Task<IActionResult> AddMatch([FromBody] AddMatchDto addMatchDto)
+		public async Task<IActionResult> AddMatch([FromBody] AddUpdateMatchDto addMatchDto)
 		{
 			if (ModelState.IsValid)
 			{
@@ -73,11 +73,32 @@ namespace MatchGoalAPI.Controllers
 			}
 			return BadRequest(ModelState);
 		}
-		[HttpDelete("RemoveMatch/{id}")]
-		[Authorize("Admin")]
-		public async Task<IActionResult> RemoveMatch()
+		[HttpPut("UpdateMatch/{id}")]
+		[Authorize(Roles = "Admin",AuthenticationSchemes = "Cookies,Bearer")]
+		public async Task<IActionResult> UpdateMatch([FromRoute]int id, [FromBody]AddUpdateMatchDto updateMatchDto)
 		{
-			return Ok();
+			if (ModelState.IsValid)
+			{
+				Match match = _mapper.Map<Match>(updateMatchDto);
+				bool result = await _matchRepostory.Update(id,match);
+				if (!result)
+					return NotFound();
+
+				MatchDto matchResponse = _mapper.Map<MatchDto>(match);
+				return Ok(matchResponse);
+			}
+
+			return BadRequest(ModelState);
+		}
+		[HttpDelete("RemoveMatch/{id}")]
+		[Authorize(Roles = "Admin",AuthenticationSchemes = "Bearer,Cookies")]
+		public async Task<IActionResult> RemoveMatch([FromRoute]int id)
+		{
+			bool result = await _matchRepostory.Remove(id);
+			if (result)
+				return NoContent();
+
+			return BadRequest();
 		}
 	}
 }

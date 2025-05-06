@@ -2,8 +2,12 @@
 
 namespace MatchGoalAPI.Dto
 {
-	public class AddMatchDto
+	public class AddUpdateMatchDto
 	{
+		/// <summary>
+		/// if update only set it
+		/// </summary>
+		public int? id { get; set; }
 		[Required(ErrorMessage = "Match date is required")]
 		[DataType(DataType.Date)]
 		public DateTime MatchDate { get; set; }
@@ -14,7 +18,7 @@ namespace MatchGoalAPI.Dto
 
 		[Required(ErrorMessage = "Away team ID is required")]
 		[CheckTeamIDFromDb]
-		//[Compare("HomeTeamID", ErrorMessage = "Home team and away team cannot be the same")]
+		[CheckThatTwoTeamsdiff]
 		public int AwayTeamID { get; set; }
 
 		[Range(0, int.MaxValue, ErrorMessage = "Home team score cannot be negative")]
@@ -29,6 +33,7 @@ namespace MatchGoalAPI.Dto
 		public MatchStatusEnum Status { get; set; }
 		[CheckWinnerWithStatus]
 		public int? WinnerTeamID { get; set; }
+		[Required(ErrorMessage = "Stadium is required")]
 		public string Stadium { get; set; }
 	}
 }

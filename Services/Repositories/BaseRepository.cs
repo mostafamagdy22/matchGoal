@@ -30,7 +30,7 @@ namespace MatchGoalAPI.Services.Repositories
 			throw new NotImplementedException();
 		}
 
-		public Task<bool> Update(T obj)
+		public Task<bool> Update(int id, T obj)
 		{
 			throw new NotImplementedException();
 		}
