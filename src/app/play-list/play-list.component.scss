@@ -1,0 +1,149 @@
+// Sass Variables
+$primary-color: #007bff;
+$secondary-color: #6c757d;
+$background-color: #f8f9fa;
+$border-color: #dee2e6;
+$shadow-color: rgba(0, 0, 0, 0.1);
+$card-padding: 15px;
+$border-radius: 8px;
+$transition-duration: 0.2s;
+
+// Container
+.container {
+  padding: 20px;
+}
+
+// Match Card
+.match-card {
+  display: flex;
+  background-color: $background-color;
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+  padding: $card-padding;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 4px $shadow-color;
+  transition: transform $transition-duration ease, box-shadow $transition-duration ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px $shadow-color;
+  }
+
+  .match-card-content {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .team-info {
+    flex: 1;
+    text-align: center;
+
+    .team-name {
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: darken($primary-color, 10%);
+      margin-bottom: 5px;
+    }
+
+    .team-score {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: $primary-color;
+    }
+  }
+
+  .match-details {
+    flex: 1;
+    text-align: center;
+
+    .match-date {
+      font-size: 0.9rem;
+      color: $secondary-color;
+      margin-bottom: 5px;
+    }
+
+    .match-status {
+      font-size: 0.9rem;
+      color: darken($secondary-color, 10%);
+      margin: 5px 0;
+    }
+
+    .stadium {
+      font-size: 0.85rem;
+      color: $secondary-color;
+    }
+  }
+}
+
+// Loading Spinner
+.loading {
+  padding: 40px 0;
+  text-align: center;
+
+  .spinner-border {
+    width: 3rem;
+    height: 3rem;
+  }
+}
+
+// Alert (Error or No Matches)
+.alert {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: $border-radius;
+
+  &.alert-info,
+  &.alert-danger {
+    font-size: 1rem;
+  }
+
+  .btn {
+    margin-top: 10px;
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .match-card {
+    flex-direction: column;
+
+    .match-card-content {
+      flex-direction: column;
+    }
+
+    .team-info,
+    .match-details {
+      margin: 10px 0;
+    }
+
+    .team-info {
+      .team-name {
+        font-size: 1.1rem;
+      }
+
+      .team-score {
+        font-size: 1.3rem;
+      }
+    }
+
+    .match-details {
+      .match-date,
+      .match-status,
+      .stadium {
+        font-size: 0.8rem;
+      }
+    }
+  }
+
+  @media (max-width: 576px) {
+    .container {
+      padding: 10px;
+    }
+
+    .match-card {
+      padding: 10px;
+    }
+  }
+}

@@ -1,0 +1,71 @@
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Matches List</h2>
+
+  <div *ngIf="isAdmin" class="text-end mb-3">
+    <button (click)="goToAddMatch()" class="btn btn-success">
+      <i class="bi bi-plus-circle me-1"></i> Add Match
+    </button>
+  </div>
+
+  <div *ngIf="isAuth" class="text-end mb-3">
+    <button (click)="goToPlayList()" class="btn btn-success">
+      <i class="bi bi-plus-circle me-1"></i> Get my PlayList
+    </button>
+  </div>
+
+  <div *ngIf="isLoading" class="loading">Loading...</div>
+
+  <div *ngIf="!isLoading && matches?.length; else noMatches" class="row">
+    <div class="col-12 mb-4" *ngFor="let match of matches">
+      <div class="match-card">
+
+        <!-- Home Team -->
+        <div class="team-info">
+          <div class="team-name">{{ match.homeTeam.teamName || 'N/A' }}</div>
+          <div class="team-score">{{ match.homeTeamScore ?? '-' }}</div>
+        </div>
+
+        <!-- Match Details -->
+        <div class="match-details">
+          <div class="match-date">{{ match.matchDate || 'Date N/A' }}</div>
+          <div class="match-status">competetion: {{ match.competition.title }}</div>
+          <div class="stadium">{{ match.stadium || 'Stadium N/A' }}</div>
+          <button *ngIf="isAuth" (click)="addToPlaylist(match)" class="btn btn-primary btn-sm mt-2">Add to My Playlist</button>
+        </div>
+
+
+
+
+        <div>
+          <button *ngIf="isAdmin" (click)="goToUpdateMatch(match.id)" class="btn btn-warning btn-sm mt-2">
+            Update Match
+          </button>
+        </div>
+
+
+        <!-- Away Team -->
+        <div class="team-info">
+          <div class="team-name">{{ match.awayTeam.teamName || 'N/A' }}</div>
+          <div class="team-score">{{ match.awayTeamScore ?? '-' }}</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="pagination-container">
+    <span *ngFor="let page of getPageNumbers()"
+          (click)="goToPage(page)"
+          class="page-number"
+          [class.active]="page === currentPage">
+      {{ page }}
+    </span>
+  </div>
+
+  <ng-template #noMatches>
+    <div class="alert alert-info text-center">
+      No matches available.
+    </div>
+  </ng-template>
+</div>

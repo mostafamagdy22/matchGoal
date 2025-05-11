@@ -1,0 +1,33 @@
+# Visual Studio
+.vs/
+*.vsidx
+*.suo
+*.user
+
+# .NET
+bin/
+obj/
+*.csproj.user
+*.pdb
+*.cache
+*.dll
+*.exe
+
+# Angular/Node
+node_modules/
+dist/
+.angular/
+*.log
+npm-debug.log
+
+# Environment files
+.env
+*.env.*
+
+# IDE
+.vscode/
+.idea/
+
+# Database
+*.mdf
+*.ldf

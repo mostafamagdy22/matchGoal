@@ -1,0 +1,70 @@
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Edit Match</h2>
+
+  <div *ngIf="isLoading" class="loading text-center">Loading...</div>
+
+  <div *ngIf="!isLoading && match" class="row">
+    <div class="col-12">
+      <form (ngSubmit)="updateMatch()">
+
+        <!-- Home Team -->
+        <div class="mb-3">
+          <label for="homeTeam" class="form-label">Home Team</label>
+          <select class="form-control" id="homeTeam" [(ngModel)]="match.homeTeam.id" name="homeTeam" required>
+            <option *ngFor="let team of teams" [value]="team.id">{{ team.teamName }}</option>
+          </select>
+        </div>
+
+        <!-- Away Team -->
+        <div class="mb-3">
+          <label for="awayTeam" class="form-label">Away Team</label>
+          <select class="form-control" id="awayTeam" [(ngModel)]="match.awayTeam.id" name="awayTeam" required>
+            <option *ngFor="let team of teams" [value]="team.id">{{ team.teamName }}</option>
+          </select>
+        </div>
+
+        <!-- Match Date -->
+        <div class="mb-3">
+          <label for="matchDate" class="form-label">Match Date</label>
+          <input type="datetime-local" class="form-control" id="matchDate" [(ngModel)]="match.matchDate" name="matchDate" required>
+        </div>
+
+        <!-- Stadium -->
+        <div class="mb-3">
+          <label for="stadium" class="form-label">Stadium</label>
+          <input type="text" class="form-control" id="stadium" [(ngModel)]="match.stadium" name="stadium">
+        </div>
+
+        <!-- Competition -->
+        <div class="mb-3">
+          <label for="competition" class="form-label">Competition</label>
+          <select class="form-control" id="competition" [(ngModel)]="match.competition.id" name="competition" required>
+            <option *ngFor="let comp of competitions" [value]="comp.id">{{ comp.title }}</option>
+          </select>
+        </div>
+
+        <!-- Status -->
+        <div class="mb-3">
+          <label for="status" class="form-label">Match Status</label>
+          <select class="form-control" id="status" [(ngModel)]="match.status" name="status" required>
+            <option *ngFor="let status of statusEnum" [value]="status">{{ status }}</option>
+          </select>
+        </div>
+
+        <!-- Home Team Score -->
+        <div class="mb-3">
+          <label for="homeTeamScore" class="form-label">Home Team Score</label>
+          <input type="number" class="form-control" id="homeTeamScore" [(ngModel)]="match.homeTeamScore" name="homeTeamScore" required>
+        </div>
+
+        <!-- Away Team Score -->
+        <div class="mb-3">
+          <label for="awayTeamScore" class="form-label">Away Team Score</label>
+          <input type="number" class="form-control" id="awayTeamScore" [(ngModel)]="match.awayTeamScore" name="awayTeamScore" required>
+        </div>
+
+        <button type="submit" class="btn btn-success">Update Match</button>
+      </form>
+    </div>
+  </div>
+</div>

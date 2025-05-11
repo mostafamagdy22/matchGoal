@@ -1,0 +1,23 @@
+<header class="header">
+  <div class="logo">
+    <a href="/" class="logo-link">Match Goal</a>
+  </div>
+  <nav class="nav-links">
+    <ul>
+      <li><a href="/matches">Matches</a></li>
+      <li><a href="/teams">Teams</a></li>
+    </ul>
+  </nav>
+  <div class="search-bar">
+    <input type="text" placeholder="Search..." class="search-input" />
+  </div>
+  <div class="auth-links">
+    <ng-container *ngIf="!(isAuthenticated$ | async); else loggedIn">
+      <a href="/login" class="auth-link">Login</a>
+      <a href="/register" class="auth-link">Register</a>
+    </ng-container>
+    <ng-template #loggedIn>
+      <a (click)="logout()" class="auth-link" style="cursor: pointer;">Logout</a>
+    </ng-template>
+  </div>
+</header>

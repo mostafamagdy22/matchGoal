@@ -1,0 +1,48 @@
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Matches Playlist</h2>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading text-center">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  
+
+  <!-- Matches List -->
+  <div *ngIf="!isLoading && matches?.length; else noMatches" class="row">
+    <div class="col-12 col-md-6 mb-4" *ngFor="let match of matches">
+      <div class="match-card">
+        <div class="match-card-content">
+          <!-- Home Team -->
+          <div class="team-info">
+            <div class="team-name">{{ match.homeTeam?.teamName || 'N/A' }}</div>
+            <div class="team-score">{{ match.homeTeamScore ?? '-' }}</div>
+          </div>
+
+          <!-- Match Details -->
+          <div class="match-details">
+            <div class="match-date">{{ match.matchDate ? (match.matchDate | date:'medium') : 'Date N/A' }}</div>
+            <div class="match-status">Competition: {{ match.competition?.title || 'N/A' }}</div>
+            <div class="match-status">Status: {{ match.status || 'N/A' }}</div>
+            <div class="stadium">Stadium: {{ match.stadium || 'N/A' }}</div>
+          </div>
+
+          <!-- Away Team -->
+          <div class="team-info">
+            <div class="team-name">{{ match.awayTeam?.teamName || 'N/A' }}</div>
+            <div class="team-score">{{ match.awayTeamScore ?? '-' }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No Matches -->
+  <ng-template #noMatches>
+    <div *ngIf="!isLoading" class="alert alert-info text-center">
+      No matches available in your playlist.
+    </div>
+  </ng-template>
+</div>

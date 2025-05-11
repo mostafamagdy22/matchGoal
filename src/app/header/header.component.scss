@@ -1,0 +1,117 @@
+// Variables
+$primary-color: #343a40;
+$text-color: white;
+$hover-color: #007bff;
+$bg-color: #222;
+$search-bg: #444;
+
+// Mixin for common link styling
+@mixin link-styles {
+  color: $text-color;
+  text-decoration: none;
+  font-size: 16px;
+  padding: 8px 15px;
+  border-radius: 5px;
+
+  &:hover {
+    color: $hover-color;
+    background-color: $bg-color;
+  }
+}
+
+// Header styles
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $primary-color;
+  padding: 10px 20px;
+  color: $text-color;
+  flex-wrap: wrap;
+
+  .logo-link {
+    font-size: 24px;
+    font-weight: bold;
+    @include link-styles;
+  }
+
+  .nav-links {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+
+    ul {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        a {
+          @include link-styles;
+        }
+      }
+    }
+  }
+
+  .search-bar {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+
+    .search-input {
+      padding: 8px;
+      width: 100%;
+      max-width: 400px;
+      border-radius: 5px;
+      border: none;
+      background-color: $search-bg;
+      color: $text-color;
+    }
+  }
+
+  .auth-links {
+    display: flex;
+    align-items: center;
+
+    a {
+      @include link-styles;
+      margin-left: 15px;
+    }
+  }
+  // Mobile responsiveness (smaller screens)
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+
+    .nav-links {
+      margin-top: 10px;
+      justify-content: flex-start;
+
+      ul {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+
+    .search-bar {
+      margin-top: 10px;
+      width: 100%;
+
+      .search-input {
+        width: 100%;
+      }
+    }
+
+    .auth-links {
+      margin-top: 10px;
+      width: 100%;
+      justify-content: flex-start;
+
+      a {
+        margin-left: 0;
+      }
+    }
+  }
+}
