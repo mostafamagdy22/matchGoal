@@ -1,13 +1,13 @@
 <div class="container mt-4">
   <h2 class="text-center mb-4">Matches List</h2>
 
-  <div *ngIf="isAdmin" class="text-end mb-3">
+  <div *ngIf="isAdmin$ | async" class="text-end mb-3">
     <button (click)="goToAddMatch()" class="btn btn-success">
       <i class="bi bi-plus-circle me-1"></i> Add Match
     </button>
   </div>
 
-  <div *ngIf="isAuth" class="text-end mb-3">
+  <div *ngIf="isAuth$ | async" class="text-end mb-3">
     <button (click)="goToPlayList()" class="btn btn-success">
       <i class="bi bi-plus-circle me-1"></i> Get my PlayList
     </button>
@@ -30,14 +30,12 @@
           <div class="match-date">{{ match.matchDate || 'Date N/A' }}</div>
           <div class="match-status">competetion: {{ match.competition.title }}</div>
           <div class="stadium">{{ match.stadium || 'Stadium N/A' }}</div>
-          <button *ngIf="isAuth" (click)="addToPlaylist(match)" class="btn btn-primary btn-sm mt-2">Add to My Playlist</button>
+          <button *ngIf="isAuth$ | async" (click)="addToPlaylist(match)" class="btn btn-primary btn-sm mt-2">Add to My Playlist</button>
         </div>
 
 
-
-
         <div>
-          <button *ngIf="isAdmin" (click)="goToUpdateMatch(match.id)" class="btn btn-warning btn-sm mt-2">
+          <button *ngIf="isAdmin$ | async" (click)="goToUpdateMatch(match.id)" class="btn btn-warning btn-sm mt-2">
             Update Match
           </button>
         </div>

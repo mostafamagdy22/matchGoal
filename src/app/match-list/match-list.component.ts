@@ -7,7 +7,7 @@ import { PaginatedResponse } from '../models/PaginatedResponse';
 import { UserService } from '../Services/UserService/user.service';
 import { Router } from '@angular/router';
 import { PlayListService } from '../Services/PlayListService/play-list.service';
-
+import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'app-match-list',
   standalone: true,
@@ -16,8 +16,8 @@ import { PlayListService } from '../Services/PlayListService/play-list.service';
   styleUrl: './match-list.component.scss'
 })
 export class MatchListComponent {
-  isAdmin = false;
-  isAuth = false;
+  isAdmin$ = new BehaviorSubject<boolean>(false);
+  isAuth$ = new BehaviorSubject<boolean>(false);
   matches: Match[] = [];
   totalPages: number = 0;
   totalItems: number = 0;
@@ -29,11 +29,10 @@ export class MatchListComponent {
   ngOnInit(): void
   {
     this.userService.getUserDetails().subscribe(data => {
-      this.isAdmin = data.isAdmin;
-      console.log("admin or not?",this.isAdmin);
+      this.isAdmin$.next(data.isAdmin);
+      this.isAuth$.next(!!localStorage.getItem('userId'));
     });
     this.loadMatches(this.currentPage);
-    if (localStorage.getItem('userId')) this.isAuth = true;
   }
 
   getMatchByID(id: number) {

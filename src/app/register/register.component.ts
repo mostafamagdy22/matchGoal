@@ -5,6 +5,7 @@ import { registerUser } from '../models/registerUser';
 import { emailExistsValidator } from '../validators/email-exists.validator';
 import { AuthService } from '../Services/AuthService/auth.service';
 import { Router } from '@angular/router';
+import { loginUser } from '../models/loginUser';
 
 @Component({
   selector: 'app-register',
@@ -20,6 +21,11 @@ export class RegisterComponent {
     password: '',
     confirmPassword: '',
   };
+  loginUser: loginUser = {
+    email: '',
+    password: '',
+  };
+
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.registerForm = this.fb.group({
@@ -59,7 +65,13 @@ export class RegisterComponent {
 
     this.authService.register(this.registerUser).subscribe(
       response => {
-        this.router.navigate(['/matches']);       
+        this.router.navigate(['/matches']);
+        // After successful registration, you can log in the user automatically
+        this.loginUser = {
+          email: this.registerForm.value['email'],
+          password: this.registerForm.value['password'],
+        };
+        this.authService.login(this.loginUser).subscribe(response => console.log("loged in"));
         console.log('Registration Successful', response);
       },
       error => {
